@@ -1,282 +1,251 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2487.7">
-  <style type="text/css">
-    body {background-color: #0c0f17}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #4689cc; -webkit-text-stroke: #4689cc}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #c27e65; -webkit-text-stroke: #c27e65}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #8cd3fe; -webkit-text-stroke: #8cd3fe}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #71c083; -webkit-text-stroke: #71c083}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Menlo; color: #cacaca; -webkit-text-stroke: #cacaca; min-height: 16.0px}
-    span.s1 {font-kerning: none; background-color: #171818}
-    span.s2 {font-kerning: none; color: #8cd3fe; background-color: #171818; -webkit-text-stroke: 0px #8cd3fe}
-    span.s3 {font-kerning: none; color: #6d6d6d; background-color: #171818; -webkit-text-stroke: 0px #6d6d6d}
-    span.s4 {font-kerning: none; color: #4689cc; background-color: #171818; -webkit-text-stroke: 0px #4689cc}
-    span.s5 {font-kerning: none; color: #cacaca; background-color: #171818; -webkit-text-stroke: 0px #cacaca}
-    span.s6 {font-kerning: none; color: #c27e65; background-color: #171818; -webkit-text-stroke: 0px #c27e65}
-    span.s7 {font-kerning: none; color: #b76ff7; background-color: #171818; -webkit-text-stroke: 0px #b76ff7}
-    span.s8 {font-kerning: none; color: #d4d4d4; background-color: #171818; -webkit-text-stroke: 0px #d4d4d4}
-    span.s9 {font-kerning: none}
-    span.s10 {font-kerning: none; color: #a7c598; background-color: #171818; -webkit-text-stroke: 0px #a7c598}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 vs 3 默契對抗計分板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        
+        body {
+            background-color: #020617;
+            font-family: 'Noto Sans TC', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .excel-cell {
+            border: 1px solid #1e293b;
+            transition: all 0.2s;
+        }
+
+        .excel-cell:focus-within {
+            background-color: #0f172a;
+            border-color: #3b82f6;
+            box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .team-a-theme { border-left: 8px solid #ef4444; }
+        .team-b-theme { border-left: 8px solid #3b82f6; }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .score-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .score-btn:active {
+            transform: scale(0.9);
+        }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s4">html</span><span class="s5"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s1">"zh-TW"</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s6">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">meta</span><span class="s5"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s5"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">title</span><span class="s3">&gt;</span><span class="s1">3 vs 3 默契對抗計分板</span><span class="s3">&lt;/</span><span class="s4">title</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://cdn.tailwindcss.com"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/react@18/umd/react.production.min.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://unpkg.com/@babel/standalone/babel.min.js"</span><span class="s3">&gt;&lt;/</span><span class="s4">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s7">@import</span><span class="s5"> </span><span class="s6">url</span><span class="s8">(</span><span class="s1">'https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Noto+Sans+TC:wght@400;700;900&amp;display=swap'</span><span class="s8">);</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">body</span><span class="s1"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #020617</span><span class="s8">;</span></p>
-<p class="p5"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s5"> </span><span class="s1">'Noto Sans TC'</span><span class="s8">,</span><span class="s5"> </span><span class="s6">sans-serif</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s6">white</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s6">hidden</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.excel-cell</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s10">1px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #1e293b</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s6">all</span><span class="s1"> </span><span class="s10">0.2s</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.excel-cell:focus-within</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background-color:</span><span class="s1"> #0f172a</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-color:</span><span class="s1"> #3b82f6</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s6">inset</span><span class="s1"> </span><span class="s10">0</span><span class="s1"> </span><span class="s10">0</span><span class="s1"> </span><span class="s10">10px</span><span class="s1"> </span><span class="s6">rgba(</span><span class="s10">59</span><span class="s8">,</span><span class="s1"> </span><span class="s10">130</span><span class="s8">,</span><span class="s1"> </span><span class="s10">246</span><span class="s8">,</span><span class="s1"> </span><span class="s10">0.2</span><span class="s6">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.team-a-theme</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> </span><span class="s2">border-left:</span><span class="s1"> </span><span class="s10">8px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #ef4444</span><span class="s8">;</span><span class="s1"> </span><span class="s8">}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s4">.team-b-theme</span><span class="s1"> </span><span class="s8">{</span><span class="s1"> </span><span class="s2">border-left:</span><span class="s1"> </span><span class="s10">8px</span><span class="s1"> </span><span class="s6">solid</span><span class="s1"> #3b82f6</span><span class="s8">;</span><span class="s1"> </span><span class="s8">}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">input::-webkit-outer-spin-button</span><span class="s8">,</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">input::-webkit-inner-spin-button</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p3"><span class="s5"><span class="Apple-converted-space">            </span></span><span class="s1">-webkit-appearance:</span><span class="s5"> </span><span class="s6">none</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s10">0</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.score-btn</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s6">all</span><span class="s1"> </span><span class="s10">0.2s</span><span class="s1"> </span><span class="s6">cubic-bezier(</span><span class="s10">0.4</span><span class="s8">,</span><span class="s1"> </span><span class="s10">0</span><span class="s8">,</span><span class="s1"> </span><span class="s10">0.2</span><span class="s8">,</span><span class="s1"> </span><span class="s10">1</span><span class="s6">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">        </span></span><span class="s1">.score-btn:active</span><span class="s5"> </span><span class="s8">{</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transform:</span><span class="s1"> </span><span class="s6">scale(</span><span class="s10">0.9</span><span class="s6">)</span><span class="s8">;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s8">}</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">div</span><span class="s5"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"root"</span><span class="s3">&gt;&lt;/</span><span class="s4">div</span><span class="s3">&gt;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p2"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s4">script</span><span class="s5"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"text/babel"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>const { useState, useMemo } = React;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>const STAGES = ['默契題 1', '默契題 2', '默契題 3', '默契題 4', '其他挑戰'];</span></p>
-<p class="p6"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>const INITIAL_TEAMS = [</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>{<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>id: 'A',<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>name: '紅隊 (A)',<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>members: ['學員 1', '學員 2', '學員 3'],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>scores: [0, 0, 0, 0, 0]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>},</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>{<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>id: 'B',<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>name: '藍隊 (B)',<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>members: ['學員 4', '學員 5', '學員 6'],</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>scores: [0, 0, 0, 0, 0]</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>function App() {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>const [teams, setTeams] = useState(INITIAL_TEAMS);</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>const processedTeams = useMemo(() =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>return teams.map(t =&gt; ({</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>...t,</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>total: t.scores.reduce((a, b) =&gt; a + b, 0)</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>}));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>}, [teams]);</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>const updateScore = (teamId, stageIdx, value) =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>setTeams(prev =&gt; prev.map(t =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>if (t.id === teamId) {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>const newScores = [...t.scores];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>newScores[stageIdx] = parseInt(value) || 0;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>return { ...t, scores: newScores };</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>return t;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>}));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>const addTacitScore = (teamId, stageIdx, points) =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>setTeams(prev =&gt; prev.map(t =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>if (t.id === teamId) {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>const newScores = [...t.scores];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>newScores[stageIdx] = points;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>return { ...t, scores: newScores };</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>return t;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>}));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>const updateInfo = (teamId, field, value, memberIdx = null) =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>setTeams(prev =&gt; prev.map(t =&gt; {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>if (t.id === teamId) {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>if (field === 'name') return { ...t, name: value };</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>if (field === 'member') {</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>const newMembers = [...t.members];</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>newMembers[memberIdx] = value;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>return { ...t, members: newMembers };</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>return t;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>}));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="h-screen w-screen flex flex-col p-6 gap-6"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>{/* Header */}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="flex justify-between items-center px-4"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="space-y-1"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h1 className="text-5xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-blue-500"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>3 VS 3 TACIT BATTLE</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/h1&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;p className="text-slate-500 font-mono text-sm tracking-[0.3em]"&gt;CELL GROUP CONFRONTATION MODE&lt;/p&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex items-center gap-8"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="text-center"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="text-slate-500 text-xs font-bold uppercase mb-1"&gt;對抗狀態&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex items-center gap-2 text-yellow-500 font-black text-xl italic"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span className="w-3 h-3 bg-yellow-500 rounded-full animate-ping"&gt;&lt;/span&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>BATTLE LIVE</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>{/* Main Scoreboard Area */}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="flex-1 grid grid-cols-2 gap-8"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>{processedTeams.map((team) =&gt; (</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div key={team.id} className={`flex flex-col bg-slate-900/40 rounded-[2rem] border border-slate-800 overflow-hidden ${team.id === 'A' ? 'team-a-theme' : 'team-b-theme'}`}&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>{/* Team Header */}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="p-8 bg-slate-900/60 border-b border-slate-800 flex justify-between items-center"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="space-y-4 flex-1"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;input<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>type="text"<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>value={team.name}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>onChange={(e) =&gt; updateInfo(team.id, 'name', e.target.value)}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>className="bg-transparent text-5xl font-black outline-none w-full border-b-2 border-dashed border-slate-700 focus:border-white transition-colors"</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="flex gap-4"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>{team.members.map((m, mIdx) =&gt; (</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;input<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>key={mIdx}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>type="text"<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>value={m}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>onChange={(e) =&gt; updateInfo(team.id, 'member', e.target.value, mIdx)}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>className="bg-slate-800 px-3 py-1 rounded-lg text-sm font-bold text-slate-400 outline-none focus:text-white"</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;div className="text-right pl-8"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1"&gt;Group Total&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div className={`text-9xl font-black italic tracking-tighter ${team.id === 'A' ? 'text-red-500' : 'text-blue-500'}`}&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>{team.total}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>{/* Scoring Grid */}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex-1 p-8 overflow-y-auto custom-scrollbar"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;table className="w-full"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;thead&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;tr className="text-slate-500 text-xs font-black uppercase tracking-widest text-left"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;th className="pb-4"&gt;挑戰項目&lt;/th&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;th className="pb-4 text-center"&gt;手動輸入&lt;/th&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;th className="pb-4 text-right"&gt;默契給分 (2/3 或 3/3)&lt;/th&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/tr&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/thead&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;tbody className="space-y-4"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>{STAGES.map((s, sIdx) =&gt; (</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;tr key={sIdx} className="group"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;td className="py-3 text-xl font-bold text-slate-300"&gt;{s}&lt;/td&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;td className="py-3 px-4"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;div className="excel-cell rounded-xl overflow-hidden bg-slate-950/50"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;input<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                                </span>type="number"<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                                </span>value={team.scores[sIdx] || ''}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                                </span>placeholder="0"</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                                </span>onChange={(e) =&gt; updateScore(team.id, sIdx, e.target.value)}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                                </span>className="w-full h-full bg-transparent p-3 text-2xl font-black text-center outline-none text-white focus:text-blue-400"</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>/&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;/td&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;td className="py-3 text-right space-x-2"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>onClick={() =&gt; addTacitScore(team.id, sIdx, 50)}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>className={`score-btn px-4 py-2 rounded-xl text-sm font-black border-2 ${team.scores[sIdx] === 50 ? 'bg-yellow-500 border-yellow-500 text-slate-950 shadow-[0_0_15px_rgba(234,179,8,0.4)]' : 'border-slate-800 text-slate-500 hover:border-yellow-500/50 hover:text-yellow-500'}`}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>及格 +50</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;/button&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>onClick={() =&gt; addTacitScore(team.id, sIdx, 150)}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>className={`score-btn px-4 py-2 rounded-xl text-sm font-black border-2 ${team.scores[sIdx] === 150 ? 'bg-green-500 border-green-500 text-slate-950 shadow-[0_0_15px_rgba(34,197,94,0.4)]' : 'border-slate-800 text-slate-500 hover:border-green-500/50 hover:text-green-500'}`}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                            </span>完勝 +150</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;/button&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;/td&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/tr&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                            </span>))}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/tbody&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/table&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>))}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>{/* Rules Footer Overlay */}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex justify-between items-center"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex gap-10"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="flex items-center gap-3"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 border border-yellow-500/30 rounded font-black"&gt;及格 50分&lt;/span&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="text-slate-400 text-sm font-bold"&gt;2/3 答案一致 (66% 默契)&lt;/span&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div className="flex items-center gap-3"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="px-3 py-1 bg-green-500/10 text-green-500 border border-green-500/30 rounded font-black"&gt;完勝 150分&lt;/span&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;span className="text-slate-400 text-sm font-bold"&gt;3/3 全員一致 (100% 完勝)&lt;/span&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="text-slate-600 font-mono text-xs italic"&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                            </span>PROJECTION READY • {new Date().toLocaleTimeString()}</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;style dangerouslySetInnerHTML={{ __html: `</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>.custom-scrollbar::-webkit-scrollbar { width: 4px; }</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                        </span>.custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                    </span>`}} /&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p6"><span class="s9"></span><br></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</span></p>
-<p class="p4"><span class="s1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</span></p>
-<p class="p1"><span class="s5"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p1"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo } = React;
+
+        const STAGES = ['默契題 1', '默契題 2', '默契題 3', '默契題 4', '其他挑戰'];
+        
+        const INITIAL_TEAMS = [
+            { 
+                id: 'A', 
+                name: '紅隊 (A)', 
+                members: ['學員 1', '學員 2', '學員 3'],
+                scores: [0, 0, 0, 0, 0]
+            },
+            { 
+                id: 'B', 
+                name: '藍隊 (B)', 
+                members: ['學員 4', '學員 5', '學員 6'],
+                scores: [0, 0, 0, 0, 0]
+            }
+        ];
+
+        function App() {
+            const [teams, setTeams] = useState(INITIAL_TEAMS);
+
+            const processedTeams = useMemo(() => {
+                return teams.map(t => ({
+                    ...t,
+                    total: t.scores.reduce((a, b) => a + b, 0)
+                }));
+            }, [teams]);
+
+            const updateScore = (teamId, stageIdx, value) => {
+                setTeams(prev => prev.map(t => {
+                    if (t.id === teamId) {
+                        const newScores = [...t.scores];
+                        newScores[stageIdx] = parseInt(value) || 0;
+                        return { ...t, scores: newScores };
+                    }
+                    return t;
+                }));
+            };
+
+            const addTacitScore = (teamId, stageIdx, points) => {
+                setTeams(prev => prev.map(t => {
+                    if (t.id === teamId) {
+                        const newScores = [...t.scores];
+                        newScores[stageIdx] = points;
+                        return { ...t, scores: newScores };
+                    }
+                    return t;
+                }));
+            };
+
+            const updateInfo = (teamId, field, value, memberIdx = null) => {
+                setTeams(prev => prev.map(t => {
+                    if (t.id === teamId) {
+                        if (field === 'name') return { ...t, name: value };
+                        if (field === 'member') {
+                            const newMembers = [...t.members];
+                            newMembers[memberIdx] = value;
+                            return { ...t, members: newMembers };
+                        }
+                    }
+                    return t;
+                }));
+            };
+
+            return (
+                <div className="h-screen w-screen flex flex-col p-6 gap-6">
+                    {/* Header */}
+                    <div className="flex justify-between items-center px-4">
+                        <div className="space-y-1">
+                            <h1 className="text-5xl font-black italic tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-blue-500">
+                                3 VS 3 TACIT BATTLE
+                            </h1>
+                            <p className="text-slate-500 font-mono text-sm tracking-[0.3em]">CELL GROUP CONFRONTATION MODE</p>
+                        </div>
+                        <div className="flex items-center gap-8">
+                            <div className="text-center">
+                                <div className="text-slate-500 text-xs font-bold uppercase mb-1">對抗狀態</div>
+                                <div className="flex items-center gap-2 text-yellow-500 font-black text-xl italic">
+                                    <span className="w-3 h-3 bg-yellow-500 rounded-full animate-ping"></span>
+                                    BATTLE LIVE
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Scoreboard Area */}
+                    <div className="flex-1 grid grid-cols-2 gap-8">
+                        {processedTeams.map((team) => (
+                            <div key={team.id} className={`flex flex-col bg-slate-900/40 rounded-[2rem] border border-slate-800 overflow-hidden ${team.id === 'A' ? 'team-a-theme' : 'team-b-theme'}`}>
+                                {/* Team Header */}
+                                <div className="p-8 bg-slate-900/60 border-b border-slate-800 flex justify-between items-center">
+                                    <div className="space-y-4 flex-1">
+                                        <input 
+                                            type="text" 
+                                            value={team.name}
+                                            onChange={(e) => updateInfo(team.id, 'name', e.target.value)}
+                                            className="bg-transparent text-5xl font-black outline-none w-full border-b-2 border-dashed border-slate-700 focus:border-white transition-colors"
+                                        />
+                                        <div className="flex gap-4">
+                                            {team.members.map((m, mIdx) => (
+                                                <input 
+                                                    key={mIdx}
+                                                    type="text" 
+                                                    value={m}
+                                                    onChange={(e) => updateInfo(team.id, 'member', e.target.value, mIdx)}
+                                                    className="bg-slate-800 px-3 py-1 rounded-lg text-sm font-bold text-slate-400 outline-none focus:text-white"
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="text-right pl-8">
+                                        <div className="text-slate-500 text-xs font-black uppercase tracking-widest mb-1">Group Total</div>
+                                        <div className={`text-9xl font-black italic tracking-tighter ${team.id === 'A' ? 'text-red-500' : 'text-blue-500'}`}>
+                                            {team.total}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Scoring Grid */}
+                                <div className="flex-1 p-8 overflow-y-auto custom-scrollbar">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="text-slate-500 text-xs font-black uppercase tracking-widest text-left">
+                                                <th className="pb-4">挑戰項目</th>
+                                                <th className="pb-4 text-center">手動輸入</th>
+                                                <th className="pb-4 text-right">默契給分 (2/3 或 3/3)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="space-y-4">
+                                            {STAGES.map((s, sIdx) => (
+                                                <tr key={sIdx} className="group">
+                                                    <td className="py-3 text-xl font-bold text-slate-300">{s}</td>
+                                                    <td className="py-3 px-4">
+                                                        <div className="excel-cell rounded-xl overflow-hidden bg-slate-950/50">
+                                                            <input 
+                                                                type="number" 
+                                                                value={team.scores[sIdx] || ''}
+                                                                placeholder="0"
+                                                                onChange={(e) => updateScore(team.id, sIdx, e.target.value)}
+                                                                className="w-full h-full bg-transparent p-3 text-2xl font-black text-center outline-none text-white focus:text-blue-400"
+                                                            />
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-3 text-right space-x-2">
+                                                        <button 
+                                                            onClick={() => addTacitScore(team.id, sIdx, 50)}
+                                                            className={`score-btn px-4 py-2 rounded-xl text-sm font-black border-2 ${team.scores[sIdx] === 50 ? 'bg-yellow-500 border-yellow-500 text-slate-950 shadow-[0_0_15px_rgba(234,179,8,0.4)]' : 'border-slate-800 text-slate-500 hover:border-yellow-500/50 hover:text-yellow-500'}`}
+                                                        >
+                                                            及格 +50
+                                                        </button>
+                                                        <button 
+                                                            onClick={() => addTacitScore(team.id, sIdx, 150)}
+                                                            className={`score-btn px-4 py-2 rounded-xl text-sm font-black border-2 ${team.scores[sIdx] === 150 ? 'bg-green-500 border-green-500 text-slate-950 shadow-[0_0_15px_rgba(34,197,94,0.4)]' : 'border-slate-800 text-slate-500 hover:border-green-500/50 hover:text-green-500'}`}
+                                                        >
+                                                            完勝 +150
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Rules Footer Overlay */}
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex justify-between items-center">
+                        <div className="flex gap-10">
+                            <div className="flex items-center gap-3">
+                                <span className="px-3 py-1 bg-yellow-500/10 text-yellow-500 border border-yellow-500/30 rounded font-black">及格 50分</span>
+                                <span className="text-slate-400 text-sm font-bold">2/3 答案一致 (66% 默契)</span>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <span className="px-3 py-1 bg-green-500/10 text-green-500 border border-green-500/30 rounded font-black">完勝 150分</span>
+                                <span className="text-slate-400 text-sm font-bold">3/3 全員一致 (100% 完勝)</span>
+                            </div>
+                        </div>
+                        <div className="text-slate-600 font-mono text-xs italic">
+                            PROJECTION READY • {new Date().toLocaleTimeString()}
+                        </div>
+                    </div>
+
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+                        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+                        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+                    `}} />
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
