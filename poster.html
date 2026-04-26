@@ -13,16 +13,29 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
         body { font-family: 'Noto Sans TC', sans-serif; }
-        .poster-shadow { shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] }
+        
+        /* 增加淡入動畫，避免 Babel 解析時的白屏感 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-slate-100">
-    <div id="root"></div>
+    <div id="root">
+        <!-- 讀取中提示 -->
+        <div class="flex items-center justify-center h-screen text-slate-400 font-bold">
+            海報讀取中...
+        </div>
+    </div>
 
     <script type="text/babel">
         const { useState } = React;
 
-        // 手寫 SVG 圖示以確保在 HTML 中穩定顯示
+        // 手寫 SVG 圖示
         const Icon = ({ name, className }) => {
             const icons = {
                 book: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
@@ -38,18 +51,18 @@
             return icons[name] || null;
         };
 
-        const Poster = () => {
+        const App = () => {
             const activities = [
-                { id: 1, name: '翻讀聖經', icon: 'book', color: 'blue', desc: '快速查找神的話語' },
-                { id: 2, name: '拼出真理', icon: 'puzzle', color: 'emerald', desc: '智慧與團隊的考驗' },
-                { id: 3, name: '聖經人物猜謎', icon: 'user', color: 'amber', desc: '傳奇信心的榜樣' },
-                { id: 4, name: '得人如得魚', icon: 'anchor', color: 'cyan', desc: '傳福音的熱忱與行動' },
-                { id: 5, name: '詩歌接唱', icon: 'music', color: 'rose', desc: '口唱心和的讚美' },
-                { id: 6, name: '默契大考驗', icon: 'heart', color: 'purple', desc: '主內一體的靈魂共鳴' },
+                { id: 1, name: '翻讀聖經', icon: 'book', textColor: 'text-blue-500', desc: '快速查找神的話語' },
+                { id: 2, name: '拼出真理', icon: 'puzzle', textColor: 'text-emerald-500', desc: '智慧與團隊的考驗' },
+                { id: 3, name: '聖經人物猜謎', icon: 'user', textColor: 'text-amber-500', desc: '傳奇信心的榜樣' },
+                { id: 4, name: '得人如得魚', icon: 'anchor', textColor: 'text-cyan-500', desc: '傳福音的熱忱與行動' },
+                { id: 5, name: '詩歌接唱', icon: 'music', textColor: 'text-rose-500', desc: '口唱心和的讚美' },
+                { id: 6, name: '默契大考驗', icon: 'heart', textColor: 'text-purple-500', desc: '主內一體的靈魂共鳴' },
             ];
 
             return (
-                <div className="min-h-screen p-4 md:p-10 flex justify-center items-start">
+                <div className="min-h-screen p-4 md:p-10 flex justify-center items-start fade-in">
                     <div className="w-full max-w-4xl bg-white shadow-2xl rounded-[3rem] overflow-hidden border-[12px] border-white relative">
                         
                         {/* Header */}
@@ -105,7 +118,7 @@
                                         <div key={item.id} className="group p-6 bg-white border border-slate-100 rounded-[2rem] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                             <div className="mb-4 flex items-center justify-between">
                                                 <div className={`p-3 bg-slate-50 rounded-2xl group-hover:bg-white`}>
-                                                    <Icon name={item.icon} className={`w-8 h-8 text-${item.color}-500`} />
+                                                    <Icon name={item.icon} className={`w-8 h-8 ${item.textColor}`} />
                                                 </div>
                                                 <span className="text-slate-200 text-4xl font-black italic">0{item.id}</span>
                                             </div>
@@ -145,6 +158,7 @@
             );
         };
 
+        // 確保 Render 時的元件名稱正確
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
