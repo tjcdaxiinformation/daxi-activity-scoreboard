@@ -94,13 +94,19 @@
             <span class="text-xs text-slate-500">列印建議：請在設定中勾選「背景圖形」以獲得最完美的漸層與色彩效果。</span>
         </div>
         <div class="flex items-center gap-3">
+            <!-- 頂部愛心累計計數器 -->
+            <div class="bg-slate-800 px-4 py-2 rounded-xl text-xs font-black flex items-center gap-2 border border-slate-700/50">
+                <span class="text-rose-500">💖 累計鼓勵</span>
+                <span id="topCounter" class="text-white text-sm font-mono font-black">0</span>
+                <span class="text-slate-500">次</span>
+            </div>
             <!-- 新增愛的鼓勵互動按鍵 -->
             <button 
-                onclick="showLoveModal()"
+                onclick="triggerLove()"
                 class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-sm rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-2 animate-bounce"
             >
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                愛的鼓勵 💖
+                愛的鼓勵
             </button>
             <button 
                 onclick="window.print()"
@@ -119,11 +125,15 @@
         
         <!-- 海報右下角浮動互動愛心按鈕 (不列印) -->
         <button 
-            onclick="showLoveModal()" 
-            class="no-print absolute bottom-6 right-6 bg-rose-500 hover:bg-rose-600 text-white p-3.5 rounded-full shadow-[0_10px_25px_rgba(244,63,94,0.4)] transition-all active:scale-90 animate-pulse flex items-center gap-1.5 z-20 border border-white/20"
+            onclick="triggerLove()" 
+            class="no-print absolute bottom-6 right-6 bg-rose-500 hover:bg-rose-600 text-white p-3.5 rounded-full shadow-[0_10px_25px_rgba(244,63,94,0.4)] transition-all active:scale-90 flex items-center gap-2 z-20 border border-white/20"
             title="點擊獲得愛的鼓勵"
         >
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <div class="relative flex items-center justify-center">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <!-- 紅色計數氣泡 (Badge) -->
+                <span id="floatingBadge" class="absolute -top-3.5 -right-3.5 bg-yellow-400 text-slate-900 border-2 border-white text-[10px] font-black w-6.5 h-6.5 px-1 rounded-full flex items-center justify-center shadow-md font-mono">0</span>
+            </div>
             <span class="text-xs font-black pr-1 tracking-wider">愛的鼓勵</span>
         </button>
 
@@ -386,7 +396,7 @@
 
         <!-- 3D 霓虹大愛心主體 -->
         <div class="text-center space-y-10 max-w-4xl px-4 fade-in">
-            <div class="animate-heartbeat">
+            <div class="animate-heartbeat relative">
                 <svg 
                     class="w-56 h-56 md:w-72 md:h-72 text-rose-500 mx-auto drop-shadow-[0_0_60px_rgba(244,63,94,0.75)]" 
                     viewBox="0 0 24 24" 
@@ -394,10 +404,15 @@
                 >
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                 </svg>
+                <!-- 彈窗大紅心上的即時累計次數 -->
+                <span id="modalHeartCount" class="absolute inset-0 flex items-center justify-center text-white text-2xl md:text-3xl font-black font-mono mt-1 drop-shadow-md">0</span>
             </div>
 
             <!-- 溫暖大標語 -->
             <div class="space-y-4">
+                <div class="text-rose-400 font-extrabold text-lg md:text-xl tracking-widest uppercase">
+                    恭喜！您已送出第 <span id="modalCongratsCount" class="text-yellow-400 font-mono text-xl md:text-2xl font-black px-1">0</span> 個鼓勵！
+                </div>
                 <h2 class="text-4xl md:text-6xl font-black leading-snug tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-amber-300 drop-shadow-[0_4px_15px_rgba(244,63,94,0.3)]">
                     主耶穌愛小孩
                 </h2>
@@ -412,8 +427,47 @@
         </div>
     </div>
 
-    <!-- 控制彈窗的極簡 JavaScript -->
+    <!-- 計數器與彈窗邏輯 -->
     <script>
+        // 初始化載入
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoveCounter();
+        });
+
+        // 讀取計數
+        function getLoveCount() {
+            return parseInt(localStorage.getItem('daxi_love_count') || '0', 10);
+        }
+
+        // 初始化顯示
+        function initLoveCounter() {
+            const count = getLoveCount();
+            updateCounterUI(count);
+        }
+
+        // 更新所有計數器的 DOM 顯示
+        function updateCounterUI(count) {
+            document.getElementById('topCounter').innerText = count;
+            document.getElementById('floatingBadge').innerText = count;
+            document.getElementById('modalHeartCount').innerText = count;
+            document.getElementById('modalCongratsCount').innerText = count;
+        }
+
+        // 點擊愛的鼓勵
+        function triggerLove() {
+            let currentCount = getLoveCount();
+            currentCount += 1;
+            
+            // 寫入本地儲存
+            localStorage.setItem('daxi_love_count', currentCount);
+            
+            // 更新 UI
+            updateCounterUI(currentCount);
+            
+            // 開啟視窗
+            showLoveModal();
+        }
+
         function showLoveModal() {
             const modal = document.getElementById('loveModal');
             modal.classList.remove('hidden');
